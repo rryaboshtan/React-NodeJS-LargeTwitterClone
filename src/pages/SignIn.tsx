@@ -1,5 +1,8 @@
 import { Button, makeStyles, Typography } from '@material-ui/core';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import SearchIcon from '@material-ui/icons/Search';
+import PeopleIcon from '@material-ui/icons/PeopleOutline';
+import MessageIcon from '@material-ui/icons/ModeCommentOutlined';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -7,8 +10,42 @@ const useStyles = makeStyles((theme) => ({
         height: '96vh',
     },
     blueSide: {
-        backgroundColor: '#1DA1F2',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#71C9F8',
         flex: '0 0 50%',
+        overflow: 'hidden',
+        position: 'relative',
+    },
+    blueSideBigIcon: {
+        position: 'absolute',
+        transform: 'translate(-50%, -50%)',
+        left: '45%',
+        top: '65%',
+        width: '350%',
+        height: '350%',
+    },
+    blueSideListInfo: {
+        zIndex: 1,
+        listStyle: 'none',
+        padding: 0,
+        margin: 0,
+        width: 380,
+        '& h6': {
+            display: 'flex',
+            alignItems: 'center',
+            color: 'white',
+            fontWeight: 700,
+            fontSize: 20,
+        },
+    },
+    blueSideListInfoItem: {
+        marginBottom: 40,
+    },
+    blueSideListInfoIcon: {
+        fontSize: 30,
+        marginRight: 15,
     },
     loginSide: {
         display: 'flex',
@@ -35,10 +72,23 @@ function SignIn() {
     return (
         <div className={classes.wrapper}>
             <section className={classes.blueSide}>
-                <ul>
-                    <li><Typography>Читайте о том, что вам интересно</Typography></li>
-                    <li><Typography>Узнайте, о чем говорят в мире</Typography></li>
-                    <li><Typography>Присоединяйтесь к общению</Typography></li>
+                <TwitterIcon color="primary" className={classes.blueSideBigIcon} />
+
+                <ul className={classes.blueSideListInfo}>
+                    <li className={classes.blueSideListInfoItem}>
+                        <Typography variant="h6">
+                            <SearchIcon className={classes.blueSideListInfoIcon}/> Читайте о том, что вам интересно
+                        </Typography>
+                    </li>
+                    <li className={classes.blueSideListInfoItem}><Typography variant="h6">
+                        <PeopleIcon className={classes.blueSideListInfoIcon}/> Узнайте, о чем говорят в мире
+                        </Typography>
+                    </li>
+                    <li className={classes.blueSideListInfoItem}>
+                        <Typography variant="h6">
+                            <MessageIcon className={classes.blueSideListInfoIcon}/> Присоединяйтесь к общению
+                        </Typography>
+                    </li>
                 </ul>
             </section>
             <section className={classes.loginSide}>
@@ -47,7 +97,7 @@ function SignIn() {
                     <Typography className={classes.loginSideTitle} variant="h4"> Узнайте, что происходит в мире прямо сейчас</Typography>
                     <Typography> <b>Присоединяйтесь к Твиттеру прямо сейчас!</b></Typography>
                     <br />
-                    <Button style={{marginBottom: 16 }} variant="contained" color="primary" fullWidth>
+                    <Button style={{ marginBottom: 16 }} variant="contained" color="primary" fullWidth>
                         Зарегистрироваться
                     </Button>
                     <Button variant="outlined" color="primary" fullWidth>

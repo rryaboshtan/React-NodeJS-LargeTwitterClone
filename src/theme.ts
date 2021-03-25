@@ -13,6 +13,12 @@ export const theme = createMuiTheme({
             'sans-serif',
         ].join(','),
     },
+    palette: {
+        primary: {
+            main: 'rgb(29, 161, 242)',
+            // dark: 'rgb(26, 145, 218)',
+        },
+    },
     overrides: {
         MuiButton: {
             root: {
@@ -30,7 +36,48 @@ export const theme = createMuiTheme({
                 borderColor: 'rgb(29, 161, 243)',
 
             }
-        }
-    }
+        },
+        MuiFilledInput: {
+            underline: {
+                '&:after': {
+                    borderBottomWidth: 2,
+                },
+                '&:before': {
+                    borderColor: '#000',
+                    borderBottomWidth: 2,
+                },
 
-})
+            },
+            input: {
+                backgroundColor: 'rgb(245, 248, 250)',
+            },
+        },
+        MuiDialog: {
+            paper: {
+                borderRadius: 15,
+            },
+        },
+        MuiDialogActions: {
+            root: {
+                marginBottom: 8,
+            },
+        },
+        MuiDialogTitle: {
+            root: {
+                borderBottom: '1px solid rgb (204, 214, 221)',
+                marginBottom: 10,
+                padding: '10 15',
+                '& h2': {
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontWeight: 800,
+                },
+                '& button': {
+                    padding: 8,
+                    marginRight: 20,
+                },
+            },
+        },
+    },
+
+});
