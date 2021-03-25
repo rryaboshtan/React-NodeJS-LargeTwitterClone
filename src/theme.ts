@@ -18,6 +18,9 @@ export const theme = createMuiTheme({
             main: 'rgb(29, 161, 242)',
             // dark: 'rgb(26, 145, 218)',
         },
+        secondary: {
+            main: 'rgb(26, 145, 218)',
+        },
     },
     overrides: {
         MuiButton: {
