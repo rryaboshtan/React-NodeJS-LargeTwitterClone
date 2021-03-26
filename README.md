@@ -3,7 +3,7 @@
 
 ## Technology stack
     - Typescript
-    - material UI (Modal Dialogs, Themes)
+    - material UI (Modal Dialogs, Themes, Grid)
 
 ### 
 
