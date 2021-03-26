@@ -7,8 +7,8 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import SearchIcon from '@material-ui/icons/Search';
 import PeopleIcon from '@material-ui/icons/PeopleOutline';
 import MessageIcon from '@material-ui/icons/ModeCommentOutlined';
-import { useState } from 'react';
-import {ModalBlock} from '../components/ModalBlock';
+import React, { useState } from 'react';
+import { ModalBlock } from '../components/ModalBlock';
 
 export const useStylesSignIn = makeStyles((theme) => ({
     wrapper: {
@@ -73,19 +73,28 @@ export const useStylesSignIn = makeStyles((theme) => ({
     },
     loginSideField: {
         marginBottom: 18,
-    }
+    },
+    registerField: {
+        marginBottom: theme.spacing(5),
+    },
+    loginFormControl: {
+        marginBottom: theme.spacing(2),
+    },
 }));
 
-function SignIn() {
+export const SignIn: React.FC = ():React.ReactElement => {
     const classes = useStylesSignIn();
 
-    const [visibleSignIn, setVisibleSignIn] = useState(false);
+    const [visibleModal, setVisibleModal] = useState<'signIn' | 'signUp' | null>();
 
-    const handleClickOpen = () => {
-        setVisibleSignIn(true);
+    const handleClickOpenSignIn = ():void => {
+        setVisibleModal('signIn');
     };
-    const handleClose = () => {
-        setVisibleSignIn(false);
+    const handleClickOpenSignUp = (): void => {
+        setVisibleModal('signUp');
+    };
+    const handleCloseModal = (): void => {
+        setVisibleModal(null);
     };
 
     return (
@@ -111,21 +120,25 @@ function SignIn() {
                 </ul>
             </section>
             <section className={classes.loginSide}>
-                
+
                 <div className={classes.loginSidewrapper}>
                     <TwitterIcon color="primary" className={classes.loginSideTwitterIcon} />
                     <Typography className={classes.loginSideTitle} variant="h4"> Узнайте, что происходит в мире прямо сейчас</Typography>
                     <Typography> <b>Присоединяйтесь к Твиттеру прямо сейчас!</b></Typography>
                     <br />
-                    <Button style={{ marginBottom: 16 }} variant="contained" color="primary" fullWidth>
+                    <Button onClick={handleClickOpenSignUp} style={{ marginBottom: 16 }} variant="contained" color="primary" fullWidth>
                         Зарегистрироваться
                     </Button>
-                    <Button onClick={handleClickOpen} variant="outlined" color="primary" fullWidth>
+                    <Button onClick={handleClickOpenSignIn} variant="outlined" color="primary" fullWidth>
                         Войти
                     </Button>
 
-                    <ModalBlock visible={visibleSignIn} onClose={handleClose}  title="Войти в аккаунт">
-                        <FormControl component="fieldset" fullWidth>
+                    <ModalBlock
+                        visible={visibleModal === 'signIn'}
+                        onClose={handleCloseModal}
+                        title="Войти в аккаунт">
+                        
+                        <FormControl className={classes.loginFormControl} component="fieldset" fullWidth>
                             <FormGroup aria-label="position" row>
                                 <TextField
                                     className={classes.loginSideField}
@@ -144,12 +157,47 @@ function SignIn() {
                                     type="password"
                                     fullWidth>
                                 </TextField>
-                                <Button onClick={handleClose} variant="contained" color="secondary" fullWidth>
+                                <Button onClick={handleCloseModal} variant="contained" color="secondary" fullWidth>
                                     Войти
                                 </Button>
-                                <br />
-                                <br />
-                                <br />
+                            </FormGroup>
+                        </FormControl>
+                    </ModalBlock>
+                    <ModalBlock
+                        visible={visibleModal === 'signUp'}
+                        onClose={handleCloseModal}
+                        title="Создайте учётную запись">
+                        
+                        <FormControl className={classes.loginFormControl} component="fieldset" fullWidth>
+                            <FormGroup aria-label="position" row>
+                                <TextField
+                                    className={classes.registerField}
+                                    id="name"
+                                    label="Имя"
+                                    type="name"
+                                    variant="filled"
+                                    fullWidth>
+                                </TextField>
+                                <TextField
+                                    className={classes.registerField}
+                                    id="email"
+                                    label="E-mail"
+                                    type="email"
+                                    variant="filled"
+                                    fullWidth>
+                                </TextField>
+                                <TextField
+                                    className={classes.registerField}
+                                    autoFocus
+                                    id="password"
+                                    label="Пароль"
+                                    variant="filled"
+                                    type="password"
+                                    fullWidth>
+                                </TextField>
+                                <Button onClick={handleCloseModal} variant="contained" color="secondary" fullWidth>
+                                    Далее
+                                </Button>
                             </FormGroup>
                         </FormControl>
                     </ModalBlock>
@@ -159,4 +207,3 @@ function SignIn() {
     );
 }
 
-export default SignIn;
