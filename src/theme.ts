@@ -82,5 +82,4 @@ export const theme = createMuiTheme({
             },
         },
     },
-
 });
