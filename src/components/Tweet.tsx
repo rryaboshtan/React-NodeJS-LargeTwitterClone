@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHomeStyles } from '../../pages/Home';
+import { useHomeStyles } from '../pages/Home';
 import classNames from 'classnames';
 import { Avatar, Grid, IconButton, Paper, Typography } from '@material-ui/core';
 import RepostIcon from '@material-ui/icons/RepeatOutlined';
@@ -18,20 +18,24 @@ interface TweetProps {
     }
 }
 
-export const Tweet: React.FC<TweetProps> = ({text, user, classes}: TweetProps): React.ReactElement => {
-    
+export const Tweet: React.FC<TweetProps> = ({ text, user, classes }: TweetProps): React.ReactElement => {
+
     return (
         <Paper className={classNames(classes.tweet, classes.tweetsHeader)} variant="outlined" >
             <Grid container spacing={3}>
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                     <Avatar
                         className={classes.tweetAvatar}
                         alt={`Аватарка пользователя ${user.fullname}`}
                         src={user.avatarUrl}>
                     </Avatar>
                 </Grid>
-                <Grid item xs={10}>
-                    <Typography><b>{user.fullname}</b> <span className={classes.tweetUserName}> @{user.username}</span> </Typography>
+                <Grid item xs={11}>
+                    <Typography><b>{user.fullname}</b>
+                        <span className={classes.tweetUserName}> @{user.username}</span>&nbsp;
+                        <span className={classes.tweetUserName}>·</span>&nbsp;
+                        <span className={classes.tweetUserName}>1 ч</span>
+                    </Typography>
                     <Typography variant="body1" gutterBottom>
                         {text}
                     </Typography>
