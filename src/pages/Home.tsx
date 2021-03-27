@@ -1,4 +1,4 @@
-import { Avatar, Container, createStyles, Grid, IconButton, InputBase, makeStyles, Paper, Typography, withStyles } from '@material-ui/core';
+import { Container, createStyles, Grid, IconButton, InputBase, makeStyles, Paper, Theme, Typography, withStyles } from '@material-ui/core';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import SearchIcon from '@material-ui/icons/Search';
 import NotificationIcon from '@material-ui/icons/NotificationsNone';
@@ -6,11 +6,10 @@ import MessageIcon from '@material-ui/icons/MailOutline';
 import BookmarkIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import ListIcon from '@material-ui/icons/ListAltOutlined';
 import UserIcon from '@material-ui/icons/PermIdentityOutlined';
-import CommentIcon from '@material-ui/icons/ModeCommentOutlined';
+import { Tweet } from '../components/Tweet';
 
-// import { grey } from '@material-ui/core/colors';
 
-const useHomeStyles = makeStyles(() => ({
+export const useHomeStyles = makeStyles((theme: Theme) => ({
     wrapper: {
         height: '100vh',
     },
@@ -55,10 +54,25 @@ const useHomeStyles = makeStyles(() => ({
             fontWeight: 800,
         },
     },
-    tweetsUserName: {
-        // color: grey[500],
+    tweet: {
+        cursor: 'pointer',
+        paddingTop: 15,
+        paddingLeft: 20,
+        '&:hover': {
+            backgroundColor: 'rgb(244, 248, 250)',
+        },
+    },
+    tweetAvatar: {
+        width: theme.spacing(5),
+        height: theme.spacing(5),
+    },
+    tweetFooter: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: 450
+    },
+    tweetUserName: {
         color: '#5B7083',
-
     },
 }
 ));
@@ -134,32 +148,16 @@ export const Home = () => {
                         <Paper className={classes.tweetsHeader} variant="outlined" >
                             <Typography variant="h6"> Главная</Typography>
                         </Paper>
-                        <Paper className={classes.tweetsHeader} variant="outlined" >
-                            <Grid container spacing={3}>
-                                <Grid item xs={1}>
-                                    <Avatar
-                                        alt="User avatar"
-                                        src="https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTN8fG1hbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60">
-                                    </Avatar>
-                                </Grid>
-                                <Grid item xs={11}>
-                                    <Typography><b>mxhxvoid</b> <span className={classes.tweetsUserName}> @mahavoid</span> </Typography>
-                                    <Typography variant="body1" gutterBottom>
-                                        по результатам анонимного опроса, школьники и педагоги назвали ненужными в школе, как минимум, 5 предметов:
-                                        1. ОБЖ
-                                        2. музыка
-                                        3. рисование
-                                        4. технология
-                                        5. природоведение
-                                    </Typography>
-                                    <div>
-                                        <IconButton>
-                                            <CommentIcon />
-                                        </IconButton>
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        </Paper>
+                        <Tweet
+                            text="Технологию сделать общей, объединить с обж и преобразовать в предмет о жизни: основы кулинарии, умение держать молоток, оказание ПМП, экономика и ещё по мелочи"
+                            user={{
+                                fullname: 'Евгений',
+                                username: 'lalayodi',
+                                avatarUrl: 'https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTN8fG1hbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60',
+                            }}
+                            classes={classes}
+                        >
+                        </Tweet>
                     </Paper>
                 </Grid>
                 <Grid item xs={3}>
