@@ -1,6 +1,6 @@
 import {
-    Container, Grid, makeStyles,
-    Paper, TextField, Theme, Typography, withStyles, Hidden, TextareaAutosize, IconButton, Button,
+    Container, Grid, makeStyles, Paper, TextField, Theme, Typography, withStyles,
+    Hidden, TextareaAutosize, IconButton, Button, InputAdornment, ListItemText, List,
 } from '@material-ui/core';
 import { SideMenu } from '../components/SideMenu';
 import { Tweet } from '../components/Tweet';
@@ -14,10 +14,6 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import React from 'react';
-import classNames from 'classnames';
-
-
-
 
 export const useHomeStyles = makeStyles((theme: Theme) => ({
     wrapper: {
@@ -123,7 +119,8 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         color: '#5B7083',
     },
     rightSide: {
-        paddingTop: 20,
+        marginLeft: 20,
+        paddingTop: 4,
         position: 'fixed',
     },
     rightSideBlock: {
@@ -135,8 +132,11 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         },
     },
     rightSideBlockHeader: {
-        border: 0,
-        borderBottom: 2,
+        borderTop: 0,
+        borderLeft: 0,
+        borderRight: 0,
+        borderBottom: "1px solid #333",
+        borderRadius: 0,
         backgroundColor: 'transparent',
         padding: "13px 18px",
         '& b': {
@@ -161,6 +161,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     },
     addForm: {
         padding: 20,
+        borderBottom: '12px solid #E6ECF0',
     },
     addFormBody: {
         display: 'flex',
@@ -183,15 +184,12 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         fontFamily: 'inherit',
         resize: 'none',
     },
-    addFormBottomLine: {
-        height: 12,
-        backgroundColor: 'E6ECF0',
-    },
     addFormCircleProgress: {
         position: 'relative',
         width: 20,
         height: 20,
         margin: '0 10px',
+        
         '& .MuiCircularProgress-root': {
             position: 'absolute',
         },
@@ -208,28 +206,21 @@ const SearchTextField = withStyles((theme: Theme) => ({
         '& .MuiOutlinedInput-root': {
             borderRadius: 30,
             backgroundColor: '#E6ECF0',
-            padding: 0,
             paddingLeft: 15,
-            '& .Mui-focused': {
+            "&.Mui-focused": {
                 backgroundColor: '#fff',
-                '& fieldset': {
-                    borderWidth: 1,
-                    borderColor: theme.palette.primary.main,
-                },
                 '& svg path': {
                     fill: theme.palette.primary.main,
                 },
             },
             '&:hover': {
+                '& svg path': {
+                    fill: theme.palette.primary.main,
+                },
+                backgroundColor: '#fff',
+                border: `1px solid ${theme.palette.primary.main}`,
                 '& fieldset': { borderColor: 'transparent' },
             },
-            '&fieldset': {
-                borderColor: 'transparent',
-                borderWidth: 1,
-            },
-        },
-        '& .MuiOutLinedInput-input': {
-            padding: '12px 14px 14px 5px',
         },
     },
 }))(TextField);
@@ -262,13 +253,12 @@ export const Home = (): React.ReactElement => {
                                     />
                                 </div>
                                 <div className={classes.addFormBottom}>
-                                    <div className={classNames(classes.tweetFooter,
-                                        classes.addFormBottomActions)}>
+                                    <div className={classes.addFormBottomActions}>
                                         <IconButton color="primary">
-                                            <ImageOutlinedIcon style={{fontSize: 26}} />
+                                            <ImageOutlinedIcon style={{ fontSize: 26 }} />
                                         </IconButton>
                                         <IconButton color="primary">
-                                            <EmodjiIcon style={{fontSize: 26}} />
+                                            <EmodjiIcon style={{ fontSize: 26 }} />
                                         </IconButton>
                                     </div>
                                     <div className={classes.addFormBottomRight}>
@@ -289,7 +279,6 @@ export const Home = (): React.ReactElement => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={classes.addFormBottomLine} />
                         </Paper>
                         {
                             [...new Array(20).fill(<Tweet
@@ -306,10 +295,87 @@ export const Home = (): React.ReactElement => {
                 </Grid>
                 <Hidden smDown>
                     <Grid item lg={3} >
-                        <SearchTextField
-                            placeholder="Поиск по Твиттеру"
-                            fullWidth>
-                        </SearchTextField>
+                        <div className={classes.rightSide}>
+                            <SearchTextField
+                                variant="outlined"
+                                placeholder="Поиск по Твиттеру"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <SearchIcon />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                fullWidth>
+                            </SearchTextField>
+                            <Paper className={classes.rightSideBlock} elevation={0}>
+                                <Paper className={classes.rightSideBlockHeader} elevation={0}>
+                                    <b>Актуальные темы</b>
+                                </Paper>
+                                <List>
+                                    <ListItem className={classes.rightSideBlockItem}>
+                                        <ListItemText
+                                            primary="Санкт-Петербург"
+                                            secondary={
+                                                <Typography component="span" variant="body2">
+                                                    Твитов: 3 331
+                                                </Typography>
+                                            }
+                                        />
+                                    </ListItem>
+                                    <Divider component="li" />
+                                    <ListItem className={classes.rightSideBlockItem}>
+                                        <ListItemText
+                                            primary="#коронавирус"
+                                            secondary={
+                                                <Typography component="span" variant="body2">
+                                                    Твитов: 163 122
+                                                </Typography>
+                                            }
+                                        />
+                                    </ListItem>
+                                    <Divider component="li" />
+                                    <ListItem className={classes.rightSideBlockItem}>
+                                        <ListItemText
+                                            primary="Беларусь"
+                                            secondary={
+                                                <Typography component="span" variant="body2">
+                                                    Твитов: 13 554
+                                                </Typography>
+                                            }
+                                        />
+                                    </ListItem>
+                                    <Divider component="li" />
+                                </List>
+                            </Paper>
+                            <Paper className={classes.rightSideBlock} elevation={0}>
+                                <Paper className={classes.rightSideBlockHeader} variant="outlined">
+                                    <b>Кого читать</b>
+                                </Paper>
+                                <List>
+                                    <ListItem className={classes.rightSideBlockItem}>
+                                        <ListItemAvatar>
+                                            <Avatar
+                                                alt="Remy Sharp"
+                                                src="https://images.unsplash.com/photo-1590086782957-93c06ef21604?ixid=MXwxMjA3fDB8MHxzZWFyY2h8OXx8bWFufGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60"
+                                            />
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary="Dock of Shame"
+                                            secondary={
+                                                <Typography component="span" variant="body2">
+                                                    @FavDockOfShame
+                                                </Typography>
+                                            }
+                                        />
+                                        <Button color="primary">
+                                            <PersonAddIcon />
+                                        </Button>
+                                    </ListItem>
+                                    <Divider component="li" />
+                                </List>
+                            </Paper>
+                        </div>
                     </Grid>
                 </Hidden>
             </Grid>
