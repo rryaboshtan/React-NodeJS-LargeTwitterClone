@@ -21,6 +21,9 @@ export const theme = createMuiTheme({
         secondary: {
             main: 'rgb(26, 145, 218)',
         },
+        text: {
+            primary: '#14171A',
+        },
     },
     overrides: {
         MuiButton: {

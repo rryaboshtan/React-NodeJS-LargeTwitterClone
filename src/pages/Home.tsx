@@ -1,14 +1,29 @@
 import {
     Container, createStyles, Grid, InputBase, makeStyles,
-    Paper, Theme, Typography, withStyles } from '@material-ui/core';
+    Paper, TextField, Theme, Typography, withStyles, Hidden,
+} from '@material-ui/core';
 import { SideMenu } from '../components/SideMenu';
 import { Tweet } from '../components/Tweet';
+import SearchIcon from '@material-ui/icons/Search';
+import PersonAddIcon from '@material-ui/icons/PersonAddOutlined';
+import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
+import EmodjiIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
+import ListItem from '@material-ui/core/ListItem/ListItem';
+import Divider from '@material-ui/core/Divider/Divider';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar/Avatar';
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import React from 'react';
+
+
+
 
 export const useHomeStyles = makeStyles((theme: Theme) => ({
     wrapper: {
         height: '100vh',
     },
     sideMenuList: {
+        position: 'fixed',
         listStyle: 'none',
         width: 230,
         padding: 0,
@@ -28,7 +43,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
             transition: 'background-color 0.2s ease-in-out',
             '&:hover': {
                 backgroundColor: 'rgba(29, 161, 242, 0.1)',
-                '& h6, & svg path' : {
+                '& h6, & svg path': {
                     color: theme.palette.primary.main,
                 },
             },
@@ -50,6 +65,12 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         color: '#000',
     },
     sideMenuTweetButton: {
+        color: '#fff',
+        fontSize: 17,
+        fontWeight: 700,
+        padding: theme.spacing(2),
+        marginTop: theme.spacing(2),
+        height: 48,
     },
     gridItem: {
         paddingLeft: 12,
@@ -76,43 +97,125 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         },
     },
     tweetAvatar: {
-        width: theme.spacing(5),
-        height: theme.spacing(5),
+        [theme.breakpoints.up('sm')]: {
+            width: theme.spacing(4),
+            height: theme.spacing(4),
+        },
+        [theme.breakpoints.up('md')]: {
+            width: theme.spacing(5),
+            height: theme.spacing(5),
+        },
     },
     tweetFooter: {
         display: 'flex',
         position: 'relative',
         left: -13,
         justifyContent: 'space-between',
-        width: 450
+        [theme.breakpoints.up('sm')]: {
+            width: 200,
+        },
+        [theme.breakpoints.up('md')]: {
+            width: 450,
+        },
     },
     tweetUserName: {
         color: '#5B7083',
     },
+    rightSide: {
+        paddingTop: 20,
+        position: 'fixed',
+    },
+    rightSideBlock: {
+        backgroundColor: '#F5F8FA',
+        borderRadius: 15,
+        marginTop: 20,
+        '& .MuiList-root': {
+            paddingTop: 0,
+        },
+    },
+    rightSideBlockHeader: {
+        border: 0,
+        borderBottom: 2,
+        backgroundColor: 'transparent',
+        padding: "13px 18px",
+        '& b': {
+            fontSize: 20,
+            fontWeight: 800,
+        },
+    },
+    rightSideBlockItem: {
+        cursor: 'pointer',
+        '& .MuiTypography-body1': {
+            fontWeight: 700,
+        },
+        '& .MuiListItemAvatar-root': {
+            minWidth: 50,
+        },
+        '& .MuiListItemText-root': {
+            margin: 0,
+        },
+        '&:hover': {
+            backgroundColor: '#edf3f6',
+        },
+    },
+    addForm: {
+        padding: 20,
+    },
+    addFormBody: {
+        display: 'flex',
+        width: '100%',
+    },
+    addFormBottom: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    addFormBottomActions: {
+        marginTop: 10,
+        paddingLeft: 70,
+    },
+    addFormTextArea: {
+        width: '100%',
+        border: 0,
+        fontSize: 20,
+        outline: 'none',
+        fontFamily: 'inherit',
+        resize: 'none',
+    },
+    addFormBottomLine: {
+        height: 12,
+        backgroundColor: 'E6ECF0',
+    },
+    addFormCircleProgress: {
+        position: 'relative',
+        width: 20,
+        height: 20,
+        margin: '0 10px',
+        '& .MuiCircularProgress-root': {
+            position: 'absolute',
+        },
+    },
+    addFormBottomRight: {
+        display: 'flex',
+        alignItems: 'center',
+    },
 }
 ));
 
-const SearchTextField = withStyles(() =>
-    createStyles({
-        input: {
-            borderRadius: 30,
-            backgroundColor: '#EBEEF0',
-            height: 45,
-            padding: 0,
-        },
-    }),
-)(InputBase);
+const SearchTextField = withStyles((theme: Theme) => ({
+    
+}))(TextField);
 
-export const Home = () => {
+export const Home = (): React.ReactElement => {
     const classes = useHomeStyles();
 
     return (
         <Container className={classes.wrapper} maxWidth="lg">
             <Grid container >
-                <Grid className={classes.gridItem} item xs={3}>
-                    <SideMenu classes={classes}/>
+                <Grid className={classes.gridItem} item md={3} sm={2}>
+                    <SideMenu classes={classes} />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item md={6} sm={9} >
                     <Paper className={classes.tweetsWrapper} >
                         <Paper className={classes.tweetsHeader} variant="outlined" >
                             <Typography variant="h6"> Главная</Typography>
@@ -130,12 +233,14 @@ export const Home = () => {
                         }
                     </Paper>
                 </Grid>
-                <Grid item xs={3}>
-                    <SearchTextField
-                        placeholder="Поиск по Твиттеру"
-                        fullWidth>
-                    </SearchTextField>
-                </Grid>
+                <Hidden smDown>
+                    <Grid item lg={3} >
+                        <SearchTextField
+                            placeholder="Поиск по Твиттеру"
+                            fullWidth>
+                        </SearchTextField>
+                    </Grid>
+                </Hidden>
             </Grid>
         </Container>
     );
