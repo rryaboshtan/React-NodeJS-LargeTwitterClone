@@ -1,6 +1,6 @@
 import { Button, Hidden, IconButton, Typography } from '@material-ui/core';
-import React from 'react';
-import { useHomeStyles } from '../pages/Home';
+import React, { useState } from 'react';
+import { useHomeStyles } from '../pages/Home/theme';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import SearchIcon from '@material-ui/icons/Search';
 import NotificationIcon from '@material-ui/icons/NotificationsNone';
@@ -9,6 +9,7 @@ import BookmarkIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import ListIcon from '@material-ui/icons/ListAltOutlined';
 import UserIcon from '@material-ui/icons/PermIdentityOutlined';
 import CreateIcon from '@material-ui/icons/CreateOutlined';
+import { ModalBlock } from './ModalBlock';
 
 interface SideMenuProps {
     classes: ReturnType<typeof useHomeStyles>;
@@ -17,6 +18,17 @@ interface SideMenuProps {
 export const SideMenu: React.FC<SideMenuProps> = ({
     classes,
 }: SideMenuProps): React.ReactElement => {
+
+    const [visibleAddTweet, setVisibleAddTweet] = useState<boolean>(false);
+
+    const onOpenAddTweet = () => {
+        setVisibleAddTweet(true);
+    };
+
+    const onCloseAddTweet = () => {
+        setVisibleAddTweet(false);
+    };
+
     return (
         <ul className={classes.sideMenuList}>
             <li >
@@ -76,7 +88,11 @@ export const SideMenu: React.FC<SideMenuProps> = ({
             </li>
             <li >
                 <Hidden smDown>
-                <Button className={classes.sideMenuTweetButton} variant="contained" color="primary" fullWidth>
+                    <Button
+                        onClick={onOpenAddTweet}
+                        className={classes.sideMenuTweetButton}
+                        variant="contained" color="primary"
+                        fullWidth>
                         Твитнуть
                 </Button>
                 </Hidden>
@@ -86,6 +102,9 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                         <CreateIcon />
                     </Button>
                 </Hidden>
+                <ModalBlock onClose={onCloseAddTweet} visible={visibleAddTweet} title=''>
+                    .......
+                </ModalBlock>
             </li>
         </ul>
     );

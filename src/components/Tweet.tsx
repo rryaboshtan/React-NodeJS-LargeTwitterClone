@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHomeStyles } from '../pages/Home';
+import { useHomeStyles } from '../pages/Home/theme';
 import classNames from 'classnames';
 import { Avatar, Grid, IconButton, Paper, Typography } from '@material-ui/core';
 import RepostIcon from '@material-ui/icons/RepeatOutlined';

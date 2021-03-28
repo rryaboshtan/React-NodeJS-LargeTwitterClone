@@ -1,7 +1,5 @@
 import {
-    Button,
-    FormControl, FormGroup, makeStyles,
-    TextField, Typography
+    Button, FormControl, FormGroup, makeStyles, TextField, Typography
 } from '@material-ui/core';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import SearchIcon from '@material-ui/icons/Search';
