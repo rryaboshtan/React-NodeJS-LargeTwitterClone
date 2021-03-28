@@ -1,6 +1,6 @@
 import {
-    Container, createStyles, Grid, InputBase, makeStyles,
-    Paper, TextField, Theme, Typography, withStyles, Hidden,
+    Container, Grid, makeStyles,
+    Paper, TextField, Theme, Typography, withStyles, Hidden, TextareaAutosize, IconButton, Button,
 } from '@material-ui/core';
 import { SideMenu } from '../components/SideMenu';
 import { Tweet } from '../components/Tweet';
@@ -14,6 +14,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import React from 'react';
+import classNames from 'classnames';
 
 
 
@@ -203,7 +204,34 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
 ));
 
 const SearchTextField = withStyles((theme: Theme) => ({
-    
+    root: {
+        '& .MuiOutlinedInput-root': {
+            borderRadius: 30,
+            backgroundColor: '#E6ECF0',
+            padding: 0,
+            paddingLeft: 15,
+            '& .Mui-focused': {
+                backgroundColor: '#fff',
+                '& fieldset': {
+                    borderWidth: 1,
+                    borderColor: theme.palette.primary.main,
+                },
+                '& svg path': {
+                    fill: theme.palette.primary.main,
+                },
+            },
+            '&:hover': {
+                '& fieldset': { borderColor: 'transparent' },
+            },
+            '&fieldset': {
+                borderColor: 'transparent',
+                borderWidth: 1,
+            },
+        },
+        '& .MuiOutLinedInput-input': {
+            padding: '12px 14px 14px 5px',
+        },
+    },
 }))(TextField);
 
 export const Home = (): React.ReactElement => {
@@ -219,6 +247,49 @@ export const Home = (): React.ReactElement => {
                     <Paper className={classes.tweetsWrapper} >
                         <Paper className={classes.tweetsHeader} variant="outlined" >
                             <Typography variant="h6"> Главная</Typography>
+                        </Paper>
+                        <Paper>
+                            <div className={classes.addForm}>
+                                <div className={classes.addFormBody}>
+                                    <Avatar
+                                        className={classes.tweetAvatar}
+                                        alt={`Аватарка пользователя UserAvatar`}
+                                        src="https://avatars.githubusercontent.com/u/79945546?s=60&u=0023c769c150c34e9b512a1d6b63e54abef57bef&v=4"
+                                    />
+                                    <TextareaAutosize
+                                        className={classes.addFormTextArea}
+                                        placeholder="Что происходит?"
+                                    />
+                                </div>
+                                <div className={classes.addFormBottom}>
+                                    <div className={classNames(classes.tweetFooter,
+                                        classes.addFormBottomActions)}>
+                                        <IconButton color="primary">
+                                            <ImageOutlinedIcon style={{fontSize: 26}} />
+                                        </IconButton>
+                                        <IconButton color="primary">
+                                            <EmodjiIcon style={{fontSize: 26}} />
+                                        </IconButton>
+                                    </div>
+                                    <div className={classes.addFormBottomRight}>
+                                        <span>280</span>
+                                        <div className={classes.addFormCircleProgress}>
+                                            <CircularProgress variant="static" size={20} />
+                                            <CircularProgress
+                                                style={{ color: 'rgba(0,0,0, 0.1)' }}
+                                                variant="static"
+                                                size={20}
+                                                thickness={4}
+                                                value={100}
+                                            />
+                                        </div>
+                                        <Button color="primary" variant="contained">
+                                            Твитнуть
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={classes.addFormBottomLine} />
                         </Paper>
                         {
                             [...new Array(20).fill(<Tweet
