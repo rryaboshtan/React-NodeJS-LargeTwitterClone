@@ -10,6 +10,7 @@ import ListIcon from '@material-ui/icons/ListAltOutlined';
 import UserIcon from '@material-ui/icons/PermIdentityOutlined';
 import CreateIcon from '@material-ui/icons/CreateOutlined';
 import { ModalBlock } from './ModalBlock';
+import { AddTweetForm } from './AddTweetForm';
 
 interface SideMenuProps {
     classes: ReturnType<typeof useHomeStyles>;
@@ -102,8 +103,10 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                         <CreateIcon />
                     </Button>
                 </Hidden>
-                <ModalBlock onClose={onCloseAddTweet} visible={visibleAddTweet} title=''>
-                    .......
+                <ModalBlock onClose={onCloseAddTweet} visible={visibleAddTweet}>
+                    <div style={{width: 550}}>
+                        <AddTweetForm maxRows={15} padding={0} classes={classes} />
+                    </div>
                 </ModalBlock>
             </li>
         </ul>

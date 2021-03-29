@@ -1,13 +1,11 @@
-import React from 'react';
+// import React from 'react';
 import {
-    Dialog, DialogContent,
-    DialogTitle, IconButton,
-
+    Dialog, DialogContent, DialogTitle, IconButton,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close'
 
 interface ModalBlockProps {
-    title: string;
+    title?: string;
     children: React.ReactNode;
     visible?: boolean;
     onClose: () => void;
@@ -22,7 +20,7 @@ export const ModalBlock: React.FC<ModalBlockProps> = ({
 
     return (
         <Dialog open={visible} onClose={onClose}>
-            <DialogTitle id="form-dialog-title">
+            <DialogTitle>
                 <IconButton
                     onClick={onClose}
                     color="secondary"

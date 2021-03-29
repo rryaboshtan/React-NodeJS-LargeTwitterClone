@@ -24,12 +24,12 @@ export const Home = (): React.ReactElement => {
                     <SideMenu classes={classes} />
                 </Grid>
                 <Grid item md={6} sm={9} >
-                    <Paper className={classes.tweetsWrapper} >
+                    <Paper className={classes.tweetsWrapper}>
                         <Paper className={classes.tweetsHeader} variant="outlined" >
                             <Typography variant="h6"> Главная</Typography>
                         </Paper>
-                        <Paper>
-                            <AddTweetForm classes={classes} />
+                        <Paper style={{ borderBottom: '12px solid #E6ECF0' }}>
+                            <AddTweetForm maxRows={15} classes={classes} />
                         </Paper>
                         {
                             [...new Array(20).fill(<Tweet

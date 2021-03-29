@@ -13,7 +13,7 @@ interface TweetProps {
     classes: ReturnType<typeof useHomeStyles>;
     user: {
         fullname: string;
-        username: String;
+        username: string;
         avatarUrl: string;
     }
 }
