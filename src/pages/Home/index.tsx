@@ -1,21 +1,33 @@
 import {
     Container, Grid, Paper, Typography, Hidden, Button, InputAdornment, ListItemText, List,
 } from '@material-ui/core';
-import { SideMenu } from '../../components/SideMenu';
-import { Tweet } from '../../components/Tweet';
-import SearchIcon from '@material-ui/icons/Search';
-import PersonAddIcon from '@material-ui/icons/PersonAddOutlined';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar/ListItemAvatar';
 import ListItem from '@material-ui/core/ListItem/ListItem';
 import Divider from '@material-ui/core/Divider/Divider';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar/Avatar';
+import SearchIcon from '@material-ui/icons/Search';
+import PersonAddIcon from '@material-ui/icons/PersonAddOutlined';
+import { Tweet } from '../../components/Tweet';
 import { AddTweetForm } from '../../components/AddTweetForm';
-import { useHomeStyles } from './theme';
+import { SideMenu } from '../../components/SideMenu';
 import { SearchTextField } from '../../components/SearchTextField';
+import { useHomeStyles } from './theme';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTweets } from '../../store/ducks/tweets/actionCreators';
+import { selectTweetsItems } from '../../store/ducks/tweets/selectors';
+import { ReactElement, useEffect } from 'react';
 
-
-export const Home = (): React.ReactElement => {
+export const Home = (): ReactElement => {
+    const dispatch = useDispatch();
+    
     const classes = useHomeStyles();
+    const tweets = useSelector(selectTweetsItems);
+    // if (tweets.length > 0)
+    //     console.log(' typeof(tweets)', typeof tweets, ' JFDJFHD ', tweets);
+    
+    useEffect(() => {
+        dispatch(fetchTweets());
+    }, [dispatch]);
 
     return (
         <Container className={classes.wrapper} maxWidth="lg">
@@ -31,16 +43,11 @@ export const Home = (): React.ReactElement => {
                         <Paper style={{ borderBottom: '12px solid #E6ECF0' }}>
                             <AddTweetForm maxRows={15} classes={classes} />
                         </Paper>
-                        {
-                            [...new Array(20).fill(<Tweet
-                                text="Технологию сделать общей, объединить с обж и преобразовать в предмет о жизни: основы кулинарии, умение держать молоток, оказание ПМП, экономика и ещё по мелочи"
-                                user={{
-                                    fullname: 'Евгений',
-                                    username: 'lalayodi',
-                                    avatarUrl: 'https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTN8fG1hbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60',
-                                }}
-                                classes={classes} >
-                            </Tweet>)]
+
+                        { tweets.length > 0 &&
+                            tweets.map(tweet => 
+                                <Tweet key={tweet._id} text={tweet.text} user={tweet.user} classes={classes}> </Tweet>
+                            )
                         }
                     </Paper>
                 </Grid>
@@ -74,7 +81,7 @@ export const Home = (): React.ReactElement => {
                                             }
                                         />
                                     </ListItem>
-                                    <Divider component="li" />
+                                    <Divider />
                                     <ListItem className={classes.rightSideBlockItem}>
                                         <ListItemText
                                             primary="#коронавирус"
@@ -85,7 +92,7 @@ export const Home = (): React.ReactElement => {
                                             }
                                         />
                                     </ListItem>
-                                    <Divider component="li" />
+                                    <Divider />
                                     <ListItem className={classes.rightSideBlockItem}>
                                         <ListItemText
                                             primary="Беларусь"
@@ -123,7 +130,7 @@ export const Home = (): React.ReactElement => {
                                             <PersonAddIcon />
                                         </Button>
                                     </ListItem>
-                                    <Divider component="li" />
+                                    <Divider />
                                 </List>
                             </Paper>
                         </div>
