@@ -14,19 +14,26 @@ import { SearchTextField } from '../../components/SearchTextField';
 import { useHomeStyles } from './theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTweets } from '../../store/ducks/tweets/actionCreators';
-import { selectTweetsItems } from '../../store/ducks/tweets/selectors';
+import { selectIsTweetsLoading, selectTweetsItems } from '../../store/ducks/tweets/selectors';
 import { ReactElement, useEffect } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { fetchTags } from '../../store/ducks/tags/actionCreators';
+import { Tags } from '../../components/Tags';
+
 
 export const Home = (): ReactElement => {
     const dispatch = useDispatch();
     
     const classes = useHomeStyles();
     const tweets = useSelector(selectTweetsItems);
+    const isLoading = useSelector(selectIsTweetsLoading);
+
     // if (tweets.length > 0)
     //     console.log(' typeof(tweets)', typeof tweets, ' JFDJFHD ', tweets);
     
     useEffect(() => {
         dispatch(fetchTweets());
+        dispatch(fetchTags());
     }, [dispatch]);
 
     return (
@@ -44,7 +51,10 @@ export const Home = (): ReactElement => {
                             <AddTweetForm maxRows={15} classes={classes} />
                         </Paper>
 
-                        { tweets.length > 0 &&
+                        {isLoading ?
+                            <div className={classes.tweetsCentered}><CircularProgress /></div>
+                            :
+                            tweets.length > 0 &&
                             tweets.map(tweet => 
                                 <Tweet key={tweet._id} text={tweet.text} user={tweet.user} classes={classes}> </Tweet>
                             )
@@ -66,46 +76,8 @@ export const Home = (): ReactElement => {
                                 }}
                                 fullWidth>
                             </SearchTextField>
-                            <Paper className={classes.rightSideBlock} elevation={0}>
-                                <Paper className={classes.rightSideBlockHeader} elevation={0}>
-                                    <b>Актуальные темы</b>
-                                </Paper>
-                                <List>
-                                    <ListItem className={classes.rightSideBlockItem}>
-                                        <ListItemText
-                                            primary="Санкт-Петербург"
-                                            secondary={
-                                                <Typography component="span" variant="body2">
-                                                    Твитов: 3 331
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-                                    <Divider />
-                                    <ListItem className={classes.rightSideBlockItem}>
-                                        <ListItemText
-                                            primary="#коронавирус"
-                                            secondary={
-                                                <Typography component="span" variant="body2">
-                                                    Твитов: 163 122
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-                                    <Divider />
-                                    <ListItem className={classes.rightSideBlockItem}>
-                                        <ListItemText
-                                            primary="Беларусь"
-                                            secondary={
-                                                <Typography component="span" variant="body2">
-                                                    Твитов: 13 554
-                                                </Typography>
-                                            }
-                                        />
-                                    </ListItem>
-                                    <Divider component="li" />
-                                </List>
-                            </Paper>
+                            
+                            <Tags classes={classes}/>
                             <Paper className={classes.rightSideBlock} elevation={0}>
                                 <Paper className={classes.rightSideBlockHeader} variant="outlined">
                                     <b>Кого читать</b>
@@ -120,6 +92,7 @@ export const Home = (): ReactElement => {
                                         </ListItemAvatar>
                                         <ListItemText
                                             primary="Dock of Shame"
+
                                             secondary={
                                                 <Typography component="span" variant="body2">
                                                     @FavDockOfShame
