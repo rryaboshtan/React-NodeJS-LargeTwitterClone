@@ -23,21 +23,22 @@ interface TweetProps {
 export const Tweet: React.FC<TweetProps> = ({ _id, text, user, classes }: TweetProps): React.ReactElement => {
 
     return (
-        <Link className={classes.tweetWrapper} to = {`/home/tweet/${_id}`}>
+        <Link className={classes.tweetWrapper} to={`/home/tweet/${_id}`}>
             <Paper className={classNames(classes.tweet, classes.tweetsHeader)} variant="outlined" >
                 <Grid container spacing={3}>
                     <Grid item sm={1}>
                         <Avatar
                             className={classes.tweetAvatar}
-                            alt={`Аватарка пользователя ${user.fullname}`}
+                            // alt={`Аватарка пользователя ${user.fullname}`}
                             src={user.avatarUrl}>
                         </Avatar>
                     </Grid>
                     <Grid item sm={11}>
-                        <Typography><b>{user.fullname}</b>
+                        <Typography>
+                            <b>{user.fullname}</b>
                             <span className={classes.tweetUserName}> @{user.username}</span>&nbsp;
-                        <span className={classes.tweetUserName}>·</span>&nbsp;
-                        <span className={classes.tweetUserName}>1 ч</span>
+                            <span className={classes.tweetUserName}>·</span>&nbsp;
+                            <span className={classes.tweetUserName}>1 ч</span>
                         </Typography>
                         <Typography variant="body1" gutterBottom>
                             {text}

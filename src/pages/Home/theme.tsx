@@ -120,10 +120,14 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     },
     tweetAvatar: {
         [theme.breakpoints.up('sm')]: {
+            width: theme.spacing(3),
+            height: theme.spacing(3),
+        },
+        [theme.breakpoints.up('md')]: {
             width: theme.spacing(4),
             height: theme.spacing(4),
         },
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('lg')]: {
             width: theme.spacing(5),
             height: theme.spacing(5),
         },

@@ -1,5 +1,5 @@
 import {
-    Container, Grid, Paper, Typography, Hidden, Button, InputAdornment, ListItemText, List, IconButton,
+    Container, Grid, Paper, Typography, Hidden, Button, InputAdornment, ListItemText, List,
 } from '@material-ui/core';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar/ListItemAvatar';
 import ListItem from '@material-ui/core/ListItem/ListItem';
@@ -15,12 +15,14 @@ import { useHomeStyles } from './theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTweets } from '../../store/ducks/tweets/actionCreators';
 import { selectIsTweetsLoading, selectTweetsItems } from '../../store/ducks/tweets/selectors';
-import React, { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetchTags } from '../../store/ducks/tags/actionCreators';
 import { Tags } from '../../components/Tags';
 import { Route } from 'react-router-dom';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { BackButton } from '../../components/BackButton';
+import { FullTweet } from './components/FullTweet';
+// import { fetchTweetData } from '../../store/ducks/tweet/actionCreators';
 
 
 export const Home = (): ReactElement => {
@@ -36,28 +38,21 @@ export const Home = (): ReactElement => {
     useEffect(() => {
         dispatch(fetchTweets());
         dispatch(fetchTags());
+        // dispatch(fetchTweetData('606615c2c5d6dcbf42090629'));
     }, [dispatch]);
 
     return (
         <Container className={classes.wrapper} maxWidth="lg">
             <Grid container >
-                <Grid className={classes.gridItem} item md={4} sm={2}>
+                <Grid className={classes.gridItem} item /*md={4} sm={2}*/>
                     <SideMenu classes={classes} />
                 </Grid>
-                <Grid item md={6} sm={9} >
+                <Grid item /*md={6} sm={9}*/ >
                     <Paper className={classes.tweetsWrapper}>
-                        <Route path="/home/tweet">
-                            <Paper
-                                style={{  height: 40 }}
-                                className={classes.tweetsHeader}
-                                variant="outlined" >
-                                <IconButton style={{padding: 0}} color="primary">
-                                    <ArrowBackIcon className={classes.tweetsHeaderBackButton}/>
-                                </IconButton>
-                                <Typography variant="h6"> Твитнуть </Typography>
-                            </Paper>
+                        <Route path="/home/tweet" >
+                            <BackButton classes={classes} />
                         </Route>
-                        <Route path="/home" exact>
+                        <Route path={["/home", "/"]} exact>
                             <Paper style={{ height: 40 }} className={classes.tweetsHeader} variant="outlined" >
                                 <Typography variant="h6"> Главная </Typography>
                             </Paper>
@@ -65,8 +60,7 @@ export const Home = (): ReactElement => {
                             <Paper style={{ borderBottom: '12px solid #E6ECF0' }}>
                                 <AddTweetForm maxRows={15} classes={classes} />
                             </Paper>
-                        </Route>
-                        <Route path="/home" exact>
+                        
                             {isLoading ?
                                 <div className={classes.tweetsCentered}><CircularProgress /></div>
                                 :
@@ -76,10 +70,12 @@ export const Home = (): ReactElement => {
                                 )
                             }
                         </Route>
+                        <Route path="/home/tweet/:id" component={FullTweet} exact />
+                        
                     </Paper>
                 </Grid>
                 <Hidden smDown>
-                    <Grid item lg={2} >
+                    <Grid item /*lg={2}*/ >
                         <div className={classes.rightSide}>
                             <SearchTextField
                                 variant="outlined"
@@ -127,6 +123,6 @@ export const Home = (): ReactElement => {
                     </Grid>
                 </Hidden>
             </Grid>
-        </Container>
+        </Container >
     );
 }
