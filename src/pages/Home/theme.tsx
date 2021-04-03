@@ -7,7 +7,16 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     sideMenuList: {
         position: 'fixed',
         listStyle: 'none',
-        width: 230,
+        width: '9vw',
+        [theme.breakpoints.up('sm')]: {
+            left: '0vw',
+        },
+        [theme.breakpoints.up('md')]: {
+            left: '8vw',
+        },
+        [theme.breakpoints.up('lg')]: {
+            left: '24vw',
+        },
         padding: 0,
         margin: 0,
     },
@@ -32,6 +41,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         },
     },
     sideMenuListItemLabel: {
+        display: 'inline-block',
         fontWeight: 700,
         fontSize: 23,
         marginLeft: 12,
@@ -59,20 +69,46 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         paddingRight: 12,
     },
     tweetsWrapper: {
+        position: 'absolute',
+        left: '50vw',
         borderRadius: 0,
         height: '100vh',
+        width: '38vw',
         borderTop: 0,
         borderBottom: 0,
+        [theme.breakpoints.down('sm')]: {
+            width: '85vw',
+            left: '10vw',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '52vw',
+            left: '18vw',
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: '35vw',
+            left: '35vw',
+        },
+    },
+    tweetWrapper: {
+        color: 'inherit',
+        textDecoration: 'none',
     },
     tweetsCentered: {
         marginTop: 100,
         textAlign: 'center',
     },
     tweetsHeader: {
-        padding: '10px 15px',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '15px 20px',
         '& h6': {
             fontWeight: 800,
         },
+    },
+    tweetsHeaderBackButton: {
+        fontSize: 29,
+        marginRight: 30,
+        padding: 5,
     },
     tweet: {
         cursor: 'pointer',
@@ -97,20 +133,21 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         position: 'relative',
         left: -13,
         justifyContent: 'space-between',
-        [theme.breakpoints.up('sm')]: {
-            width: 200,
-        },
-        [theme.breakpoints.up('md')]: {
-            width: 450,
-        },
     },
     tweetUserName: {
         color: '#5B7083',
     },
     rightSide: {
+        left: '70vw',
         marginLeft: 20,
         paddingTop: 4,
         position: 'fixed',
+        [theme.breakpoints.up('sm')]: {
+            left: '45vw',
+        },
+        [theme.breakpoints.up('md')]: {
+            left: '70vw',
+        },
     },
     rightSideBlock: {
         backgroundColor: '#F5F8FA',
@@ -147,6 +184,10 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         '&:hover': {
             backgroundColor: '#edf3f6',
         },
+        '& a': {
+            color: 'inherit',
+            textDecoration: 'none',
+        },
     },
     addForm: {
         padding: 20,
@@ -154,6 +195,11 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     addFormBody: {
         display: 'flex',
         width: '100%',
+    },
+    AddFormButton: {
+        [theme.breakpoints.down('sm')]: {
+            width: 30,
+        },
     },
     addFormBottom: {
         display: 'flex',

@@ -76,6 +76,7 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
                     </>)
                     }
                     <Button
+                        className={classes.AddFormButton}
                         onClick={handleClickAddTweet}
                         disabled={text.length >= MAX_LENGTH}
                         color="primary"

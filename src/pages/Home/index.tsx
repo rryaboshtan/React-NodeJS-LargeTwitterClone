@@ -1,5 +1,5 @@
 import {
-    Container, Grid, Paper, Typography, Hidden, Button, InputAdornment, ListItemText, List,
+    Container, Grid, Paper, Typography, Hidden, Button, InputAdornment, ListItemText, List, IconButton,
 } from '@material-ui/core';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar/ListItemAvatar';
 import ListItem from '@material-ui/core/ListItem/ListItem';
@@ -15,22 +15,24 @@ import { useHomeStyles } from './theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTweets } from '../../store/ducks/tweets/actionCreators';
 import { selectIsTweetsLoading, selectTweetsItems } from '../../store/ducks/tweets/selectors';
-import { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetchTags } from '../../store/ducks/tags/actionCreators';
 import { Tags } from '../../components/Tags';
+import { Route } from 'react-router-dom';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
 export const Home = (): ReactElement => {
     const dispatch = useDispatch();
-    
+
     const classes = useHomeStyles();
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
 
     // if (tweets.length > 0)
     //     console.log(' typeof(tweets)', typeof tweets, ' JFDJFHD ', tweets);
-    
+
     useEffect(() => {
         dispatch(fetchTweets());
         dispatch(fetchTags());
@@ -39,30 +41,45 @@ export const Home = (): ReactElement => {
     return (
         <Container className={classes.wrapper} maxWidth="lg">
             <Grid container >
-                <Grid className={classes.gridItem} item md={3} sm={2}>
+                <Grid className={classes.gridItem} item md={4} sm={2}>
                     <SideMenu classes={classes} />
                 </Grid>
                 <Grid item md={6} sm={9} >
                     <Paper className={classes.tweetsWrapper}>
-                        <Paper className={classes.tweetsHeader} variant="outlined" >
-                            <Typography variant="h6"> Главная</Typography>
-                        </Paper>
-                        <Paper style={{ borderBottom: '12px solid #E6ECF0' }}>
-                            <AddTweetForm maxRows={15} classes={classes} />
-                        </Paper>
+                        <Route path="/home/tweet">
+                            <Paper
+                                style={{  height: 40 }}
+                                className={classes.tweetsHeader}
+                                variant="outlined" >
+                                <IconButton style={{padding: 0}} color="primary">
+                                    <ArrowBackIcon className={classes.tweetsHeaderBackButton}/>
+                                </IconButton>
+                                <Typography variant="h6"> Твитнуть </Typography>
+                            </Paper>
+                        </Route>
+                        <Route path="/home" exact>
+                            <Paper style={{ height: 40 }} className={classes.tweetsHeader} variant="outlined" >
+                                <Typography variant="h6"> Главная </Typography>
+                            </Paper>
 
-                        {isLoading ?
-                            <div className={classes.tweetsCentered}><CircularProgress /></div>
-                            :
-                            tweets.length > 0 &&
-                            tweets.map(tweet => 
-                                <Tweet key={tweet._id} text={tweet.text} user={tweet.user} classes={classes}> </Tweet>
-                            )
-                        }
+                            <Paper style={{ borderBottom: '12px solid #E6ECF0' }}>
+                                <AddTweetForm maxRows={15} classes={classes} />
+                            </Paper>
+                        </Route>
+                        <Route path="/home" exact>
+                            {isLoading ?
+                                <div className={classes.tweetsCentered}><CircularProgress /></div>
+                                :
+                                tweets.length > 0 &&
+                                tweets.map(tweet =>
+                                    <Tweet _id={tweet._id} key={tweet._id} text={tweet.text} user={tweet.user} classes={classes}> </Tweet>
+                                )
+                            }
+                        </Route>
                     </Paper>
                 </Grid>
                 <Hidden smDown>
-                    <Grid item lg={3} >
+                    <Grid item lg={2} >
                         <div className={classes.rightSide}>
                             <SearchTextField
                                 variant="outlined"
@@ -76,8 +93,8 @@ export const Home = (): ReactElement => {
                                 }}
                                 fullWidth>
                             </SearchTextField>
-                            
-                            <Tags classes={classes}/>
+
+                            <Tags classes={classes} />
                             <Paper className={classes.rightSideBlock} elevation={0}>
                                 <Paper className={classes.rightSideBlockHeader} variant="outlined">
                                     <b>Кого читать</b>
