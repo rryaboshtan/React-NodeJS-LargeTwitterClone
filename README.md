@@ -7,6 +7,6 @@
     - React, Redux, Redux-saga
     - Reselect, Immer
     - Redux Ducks
-    - Json-server
+    - Json-server, Postman
 ### 
 

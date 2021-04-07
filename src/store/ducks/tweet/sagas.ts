@@ -4,10 +4,10 @@ import { setTweetLoadingState, setTweetData } from './actionCreators';
 import { FetchTweetDataActionInterface, TweetActionsType } from './contracts/actionTypes';
 import { LoadingState } from './contracts/state';
 
-export function* fetchTweetDataRequest(fetchTweetDataAction: FetchTweetDataActionInterface): any  {
+export function* fetchTweetDataRequest({payload}: FetchTweetDataActionInterface): any  {
 
   try {
-    const data = yield call(TweetsApi.fetchTweetData, fetchTweetDataAction.payload);
+    const data = yield call(TweetsApi.fetchTweetData, payload);
 
     yield put(setTweetData(data));
   } catch (error) {

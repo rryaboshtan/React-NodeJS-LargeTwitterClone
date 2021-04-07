@@ -22,7 +22,6 @@ import { Tags } from '../../components/Tags';
 import { Route } from 'react-router-dom';
 import { BackButton } from '../../components/BackButton';
 import { FullTweet } from './components/FullTweet';
-// import { fetchTweetData } from '../../store/ducks/tweet/actionCreators';
 
 
 export const Home = (): ReactElement => {
@@ -34,11 +33,11 @@ export const Home = (): ReactElement => {
 
     // if (tweets.length > 0)
     //     console.log(' typeof(tweets)', typeof tweets, ' JFDJFHD ', tweets);
-
+    console.log('TWEET ', tweets);
     useEffect(() => {
         dispatch(fetchTweets());
         dispatch(fetchTags());
-        // dispatch(fetchTweetData('606615c2c5d6dcbf42090629'));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
 
     return (
@@ -64,14 +63,13 @@ export const Home = (): ReactElement => {
                             {isLoading ?
                                 <div className={classes.tweetsCentered}><CircularProgress /></div>
                                 :
-                                tweets.length > 0 &&
+                                (tweets && tweets.length) > 0 &&
                                 tweets.map(tweet =>
                                     <Tweet _id={tweet._id} key={tweet._id} text={tweet.text} user={tweet.user} classes={classes}> </Tweet>
                                 )
                             }
                         </Route>
                         <Route path="/home/tweet/:id" component={FullTweet} exact />
-                        
                     </Paper>
                 </Grid>
                 <Hidden smDown>

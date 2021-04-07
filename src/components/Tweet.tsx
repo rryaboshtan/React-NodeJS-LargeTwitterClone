@@ -29,7 +29,7 @@ export const Tweet: React.FC<TweetProps> = ({ _id, text, user, classes }: TweetP
                     <Grid item sm={1}>
                         <Avatar
                             className={classes.tweetAvatar}
-                            // alt={`Аватарка пользователя ${user.fullname}`}
+                            alt={`Аватарка пользователя ${user.fullname}`}
                             src={user.avatarUrl}>
                         </Avatar>
                     </Grid>
@@ -66,7 +66,6 @@ export const Tweet: React.FC<TweetProps> = ({ _id, text, user, classes }: TweetP
                                 </IconButton>
                             </div>
                         </div>
-
                     </Grid>
                 </Grid>
             </Paper>

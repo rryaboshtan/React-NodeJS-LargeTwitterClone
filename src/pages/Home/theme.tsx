@@ -105,6 +105,10 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
             fontWeight: 800,
         },
     },
+    tweetsHeaderUser: {
+        display: 'flex',
+        alignItems: 'center',
+    },
     tweetsHeaderBackButton: {
         fontSize: 29,
         marginRight: 30,
@@ -117,6 +121,13 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         '&:hover': {
             backgroundColor: 'rgb(244, 248, 250)',
         },
+    },
+    fullTweet: {
+        padding: 22,
+    },
+    fullTweetText: {
+        fontSize: 24,
+        marginTop: 20,
     },
     tweetAvatar: {
         [theme.breakpoints.up('sm')]: {

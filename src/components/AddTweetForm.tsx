@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import EmodjiIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
-import { Avatar, Button, CircularProgress, IconButton, TextareaAutosize } from '@material-ui/core';
+import { Avatar, Button, CircularProgress, IconButton, Snackbar, TextareaAutosize } from '@material-ui/core';
 import { useHomeStyles } from '../pages/Home/theme';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAddTweet } from '../store/ducks/tweets/actionCreators';
+import { AddFormState } from '../store/ducks/tweets/contracts/state';
+import { selectAddFormState } from '../store/ducks/tweets/selectors';
 
 interface AddTweetFormProps {
     maxRows?: number;
@@ -17,21 +21,43 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
     maxRows,
     padding,
 }: AddTweetFormProps): React.ReactElement => {
+
+    const dispatch = useDispatch()
+    const [visibleNotification, setVisibleNotification] = useState<boolean>(false);
+
+    const addFormState = useSelector(selectAddFormState)
     const [text, setText] = useState<string>('');
     const textLimitPercent = (text.length / 280) * 100;
     const maxLength = MAX_LENGTH - text.length;
 
+    useEffect(() => {
+        if (addFormState === AddFormState.ERROR)
+            setVisibleNotification(true);
+    }, [addFormState])
+
+    const handleCloseNotification = () => {
+        setVisibleNotification(false);
+    }
+
     const handleChangeTextarea = (e: React.FormEvent<HTMLTextAreaElement>) => {
-        if (e.currentTarget) 
+        if (e.currentTarget)
             setText(e.currentTarget.value);
     }
-    const handleClickAddTweet = ():void => {
+    const handleClickAddTweet = (): void => {
+        dispatch(fetchAddTweet(text));
         setText('');
     }
 
     return (
-        <div className={classes.addForm} style={{padding: padding}}>
+        <div className={classes.addForm} style={{ padding: padding }}>
+            <Snackbar
+                open={visibleNotification}
+                onClose={handleCloseNotification}
+                message="Tweet Add Error, may be not connection"
+                anchorOrigin = {{vertical: 'top', horizontal: 'center'}}
+            />
             <div className={classes.addFormBody}>
+                
                 <Avatar
                     className={classes.tweetAvatar}
                     alt={`Аватарка пользователя UserAvatar`}
@@ -78,10 +104,10 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({
                     <Button
                         className={classes.AddFormButton}
                         onClick={handleClickAddTweet}
-                        disabled={text.length >= MAX_LENGTH}
+                        disabled={!text || text.length >= MAX_LENGTH}
                         color="primary"
                         variant="contained">
-                            Твитнуть
+                        {addFormState === AddFormState.LOADING ? <CircularProgress size={18} /> : 'Твитнуть'}
                     </Button>
                 </div>
             </div>
