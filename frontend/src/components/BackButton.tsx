@@ -1,6 +1,6 @@
-import { IconButton, Paper, Typography } from '@material-ui/core';
 import React from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { IconButton, Paper, Typography } from '@material-ui/core';
 import { useHomeStyles } from '../pages/Home/theme';
 import { useHistory } from 'react-router-dom';
 

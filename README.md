@@ -8,5 +8,8 @@
     - Reselect, Immer
     - Redux Ducks
     - Json-server, Postman
-### 
+    - Node JS, Crypto
+
+### Screenshots
+![](screenshots/screenshot1.png)
 

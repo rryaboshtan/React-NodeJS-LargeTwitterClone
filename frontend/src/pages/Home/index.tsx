@@ -48,9 +48,9 @@ export const Home = (): ReactElement => {
                 </Grid>
                 <Grid item /*md={6} sm={9}*/ >
                     <Paper className={classes.tweetsWrapper}>
-                        <Route path="/home/tweet" >
-                            <BackButton classes={classes} />
-                        </Route>
+                        {/* <Route path = "home/"> */}
+                            <BackButton classes={classes}/>
+                        {/* </Route> */}
                         <Route path={["/home", "/"]} exact>
                             <Paper style={{ height: 40 }} className={classes.tweetsHeader} variant="outlined" >
                                 <Typography variant="h6"> Главная </Typography>

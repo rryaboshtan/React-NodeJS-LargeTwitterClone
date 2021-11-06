@@ -24,7 +24,10 @@ const UserSchema = new Schema({
         type: String,
     },
     location: String,
-    confirmed: Boolean,
+    confirmed: {
+        type: Boolean,
+        default: false,
+    } ,
     about: String,
     website: String,
 });

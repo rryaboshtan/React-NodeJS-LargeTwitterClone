@@ -23,24 +23,24 @@ export const Tags: React.FC<TagsProps> = ({ classes }: TagsProps): React.ReactEl
             </Paper>
             <List>
                 {
-                    items.map(obj =>
-                        <React.Fragment key={obj._id}>
-                            <ListItem className={classes.rightSideBlockItem}>
-                                <Link to = { `/home/search?q=${obj.name}`}>
-                                    <ListItemText
-                                        primary={obj.name}
-                                        secondary={
-                                            <Typography component="span" variant="body2">
-                                                Твитов: {obj.count}
-                                            </Typography>
-                                        }
-                                    />
-                                </Link>
-                            </ListItem>
-                            <Divider />
+                    // items.map(obj =>
+                    //     <React.Fragment key={obj._id}>
+                    //         <ListItem className={classes.rightSideBlockItem}>
+                    //             <Link to = { `/home/search?q=${obj.name}`}>
+                    //                 <ListItemText
+                    //                     primary={obj.name}
+                    //                     secondary={
+                    //                         <Typography component="span" variant="body2">
+                    //                             Твитов: {obj.count}
+                    //                         </Typography>
+                    //                     }
+                    //                 />
+                    //             </Link>
+                    //         </ListItem>
+                    //         <Divider />
 
-                        </React.Fragment>
-                    )
+                    //     </React.Fragment>
+                    // )
                 }
             </List>
         </Paper>
